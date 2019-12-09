@@ -2,12 +2,12 @@ import unittest
 import Hakaton_Project
 
 
-class Test_test1(unittest.TestCase):
+class Test_Hacakton(unittest.TestCase):
     def test_isUserType(self):
-        result=Hakaton_Project.isUserType("P")
+        result=Hakaton_Project.isUserType("K")
         self.assertTrue(result)
     def test_isGender(self):
-        result=Hakaton_Project.isGender("B")
+        result=Hakaton_Project.isGender("u")
         self.assertTrue(result)
     def test_Proper_ID(self):
         result=Hakaton_Project.Proper_ID("1234")
@@ -21,6 +21,10 @@ class Test_test1(unittest.TestCase):
     def test_Check_User_Type_From_DB(self):
         result=Hakaton_Project.Check_User_Type_From_DB("L")
         self.assertTrue(result)
+    def test_Delete(self):
+        result=Hakaton_Project.Check_User_Type_From_DB("123456")
+        self.assertTrue(result)
+        
     
         
 
