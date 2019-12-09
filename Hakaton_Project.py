@@ -1,7 +1,7 @@
 import sqlite3
 
 def Create_Table():
-    conn = sqlite3.connect('Server.db')
+    conn = sqlite3.connect('GameDataBase.db')
     c = conn.cursor()
     c.execute("""CREATE TABLE IF NOT EXISTS users (
            UserType text,
@@ -22,20 +22,18 @@ def isUserType(UserType):
 
 
 def isGender(gender):
-    if gender.upper()=='B' or gender.upper()=='G':
+    if gender=='B' or gender=='G' or gender=='b' or gender=='g':
         return True
     return False
 
 def Check_User_Type_From_DB(result):
-    
-    if result=='M':
+    if result=='M' or result=='m':
         ManagerMenu()
         return True
-    elif result=='P':
-        return True
-        print("Parent_Menu()-SOON")
-        return True
-    elif result=='U':
+    elif result=='P' or result=='p':
+       menu_parent()
+       return True
+    elif result=='U' or result=='u':
         Menu_User()
         return True
     else:
@@ -65,7 +63,7 @@ def Registerion():
         insert_into_database(UserType,first,last,gender,age,id,username,password)
 
 def insert_into_database(UserType,first,last,gender,age,id,username,password):
-    conn = sqlite3.connect('Server.db')
+    conn = sqlite3.connect('GameDataBase.db')
     c = conn.cursor()
     with conn:
         c.execute("INSERT INTO users VALUES (:UserType,:first, :last,:age,:gender,:id,:username,:password)", {'UserType':UserType,'first':first, 'last':last,'age':age,'gender':gender,'id':id,'username':username,'password':password})
@@ -90,7 +88,7 @@ def login():
     while True:
         username=input("Enter UserName: ")
         password=input("Enter Password: ")
-        with sqlite3.connect("Server.db") as db:
+        with sqlite3.connect("GameDataBase.db") as db:
             cursor=db.cursor()
         find_user=("SELECT * FROM users WHERE username=? AND password=?")
         cursor.execute(find_user,[(username),(password)])
@@ -108,19 +106,24 @@ def login():
                 return False
 
 
-def Delete():
-    conn = sqlite3.connect('Server.db')
+def Delete(id):
+    conn = sqlite3.connect('GameDataBase.db')
     c = conn.cursor()
-    id=input("Enter ID of the player that you want to remove: ")
     with conn:
         c.execute("DELETE  FROM users WHERE id = :id",
                   {'id': id})
-        conn.commit()
+        result=c.fetchall()
+        if len(result)==0:
+            return False
+        else:
+            conn.commit()
+            return True
 
 
 
 def Menu():
-    conn = sqlite3.connect('Server.db')
+    print()
+    conn = sqlite3.connect('GameDataBase.db')
     c = conn.cursor()
     Create_Table()
     print("Welcome to Moment Of Emotion Game")
@@ -132,7 +135,7 @@ def Menu():
         3.Exit/Quit
         """)
         ans=int(input("Enter your choice:"))
-        if ans==1:
+        if ans==1:  
           login()
           ans=None
         elif ans==2:
@@ -144,8 +147,10 @@ def Menu():
         else:
            print("\n Not Valid Choice Try again")
 def Menu_User():
+    print()
     Loop=True
     while Loop:
+        print()
         print("""
         1.Play
         2.Total play time
@@ -153,45 +158,54 @@ def Menu_User():
         """)
         ans=int(input("Enter your choice:"))
         if ans==1:
+          print()
           print("Play()")
         elif ans==3:
+          print()
           print("\n Goodbye") 
           Loop = None
           Menu()
           break
         else:
+           print()
            print("\n InValid Choice Try again")
     
 def Manager_Add_Remove():
+    print()
     x=True
     while x:
         print("""1.Add player
 2.Remove player
 3.return to menu""")
         x=int(input("Enter your choice:"))
-        if x==1 or x==2:
-            if x==1:
-                Registerion()
-                break
-                
-            elif x==2:
-                Delete()
-                break
-                
-           
-            elif x==3:
-                ManagerMenu()
-                break
-                
-            else:
-                print("Invalid Value, you returned to Manager menu")
-                ManagerMenu()
+        if x==1:
+            print()
+            Registerion()
+            break
+            
+        elif x==2:
+            print()
+            id=input("Enter ID of the player that you want to remove: ")
+            Delete(id)
+            break
+            
+       
+        elif x==3:
+            print()
+            ManagerMenu()
+            break
+            
+        else:
+            print()
+            print("Invalid Value, you returned to Manager menu")
                 
 
 
 def ManagerMenu():
+    print()
     x=True
-    while True:
+    while x:
+        print()
         print("Welcome to Manager menu")
         print("""1.Feedback from parent
 2.Add/Remove users
@@ -209,22 +223,56 @@ def ManagerMenu():
             Manager_Add_Remove()
         elif x==5:
             sum=(50.99)*count_players()
+            print()
             print("Your Profits: {0} shekel til now".format(sum))
+            print()
                 
         elif x==8:
             print()
             print("GoodBye manager")
+            x=None
             Menu()
-            break
+            
         else:
             print()
             print("Invalid value,please enter again")
 
 def count_players():
+    conn = sqlite3.connect('GameDataBase.db')
+    c = conn.cursor()
     count=0
     c.execute("SELECT COUNT (*) FROM users WHERE UserType='P'")
     rowcount = c.fetchone()[0]
     return rowcount
+def menu_parent():
+    Loop=True
+    while Loop:
+        print("""
+        1.Time limitetion
+        2.Total play time of the son
+        3.Notification to sleep
+        4.Enter feedback
+        5.Logout
+        """)
+        ans=int(input("Enter your choice:"))
+        if ans==1:
+          print("Time limitetion()")
+        elif ans==2:
+          print("how much time()") 
+        elif ans==3:
+          print("Notification to sleep()")
+        elif ans==4:
+          print("feedback()")
+        elif ans==5:
+          print("goodbye")
+          Loop = None
+          Menu()
+          break
+          
+        else:
+           print("\n InValid Choice Try again")
+    
+    
 Menu()
 
 
