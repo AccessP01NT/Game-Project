@@ -1,5 +1,6 @@
 #pragma once
 #include<iostream>
+#include"Person.h"
 #include<string>
 using namespace std;
 class Employee:virtual public Person {
