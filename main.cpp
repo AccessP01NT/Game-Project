@@ -47,7 +47,19 @@ int main() {
 			arr[i] = new Employee(name, age, id, salary);
 		}
 		else if (type == 4) {
-			exit(1);
+			cout << "Name:" << name << endl;
+			cin >> name;
+			cout << "age:" << age << endl;
+			cin >> age;
+			cout << "id:" << id << endl;
+			cin >> id;
+			cout << "salary:" << institute << endl;
+			cin >> salary;
+			cout << "institute:" << institute << endl;
+			cin >> institute;
+			cout << "average:" << institute << endl;
+			cin >> average;
+			arr[i]=new WorkingSudent(name, age, id, salary, institute, average);
 		}
 	}
 	for (int i = 0; i < size; i++) {
