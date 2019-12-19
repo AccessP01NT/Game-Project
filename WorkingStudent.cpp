@@ -3,6 +3,6 @@
 void WorkingStudent::DetailsPerson()
 {
 	Employee::DetailsPerson();
-	student::DetailsPerson();
+	Student::DetailsPerson();
 	cout << "same_institute: " << same_institute;
 }
