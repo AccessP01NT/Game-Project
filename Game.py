@@ -3,7 +3,10 @@ import datetime
 import pygame
 from random import randrange
 from button import button
+<<<<<<< HEAD
 from _overlapped import NULL
+=======
+>>>>>>> tomer
 
 def SecToTime(total_seconds):
         m=total_seconds//60
@@ -12,6 +15,10 @@ def SecToTime(total_seconds):
         m=m%60
         h=h%24
         print("Hours:{0},Minutes:{1},Seconds:{2}".format(h,m,s))
+<<<<<<< HEAD
+=======
+        
+>>>>>>> tomer
 def get_totaltime(id):
     conn = sqlite3.connect('Data.db')
     with conn as db:
@@ -34,7 +41,12 @@ def Create_Table():
            id text,
            id_parent text, 
            username text,
+<<<<<<< HEAD
            password text
+=======
+           password text,
+           time_limit text
+>>>>>>> tomer
         )""")
     
     c.execute("""CREATE TABLE IF NOT EXISTS Time (
@@ -70,8 +82,13 @@ def Create_Table():
        exposure_happy integar,
        level_sad text,
        exposure_sad integar,
+<<<<<<< HEAD
        level_angry text,
        exposure_angry integar,
+=======
+       level_argry text,
+       exposure_argry integar,
+>>>>>>> tomer
        level_fear text,
        exposure_fear integar,
        level_disappointment text,
@@ -80,6 +97,7 @@ def Create_Table():
        exposure_suprised integar,
        level_tired text,
        exposure_tired integar,
+<<<<<<< HEAD
        level_affection text,
        exposure_affection integar,
        level_proud text,
@@ -87,21 +105,47 @@ def Create_Table():
        level_concern text,
        exposure_concern integar
     )""")
+=======
+       level_8 text,
+       exposure_8 integar,
+       level_9 text,
+       exposure_9 integar,
+       level_10 text,
+       exposure_10 integar
+    )""")
+    
+    c.execute("""CREATE TABLE IF NOT EXISTS reports (
+       id text,
+       review text,
+       first text,
+       last text,
+       date text
+    )""")
+
+>>>>>>> tomer
 
 def isUserType(UserType):
     if UserType.upper()=='P' or UserType.upper()=='U' or UserType.upper()=='M':
         return True
     return False
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> tomer
 def isGender(gender):
     if gender=='B' or gender=='G' or gender=='b' or gender=='g':
         return True
     return False
 
 def Check_User_Type_From_DB(res):
+<<<<<<< HEAD
     type=str(res[0][0])
     id=str(res[0][5])
+=======
+    type=res[0][0]
+    id=res[0][5]
+>>>>>>> tomer
     if type=='M' or type=='m':
         ManagerMenu(id)
         return True
@@ -149,12 +193,23 @@ def insert_into_database_user(UserType,first,last,gender,age,id,id_parent,userna
     conn = sqlite3.connect('Data.db')
     c = conn.cursor()
     with conn:
+<<<<<<< HEAD
         c.execute("INSERT INTO users VALUES (:UserType,:first, :last,:age,:gender,:id,:id_parent,:username,:password)", {'UserType':UserType,'first':first, 'last':last,'age':age,'gender':gender,'id':id,'id_parent':id_parent,'username':username,'password':password})
         if UserType.upper()=='U':
             c.execute("INSERT INTO Time VALUES (:id,:day_time,:week_time,:total_time)", {'id':id,'day_time':'0','week_time':'0','total_time':'0'})
             c.execute("INSERT INTO exposure_and_understanding VALUES (:id,:level_happy,:exposure_happy,:level_sad,:exposure_sad,:level_angry,:exposure_angry,:level_fear,:exposure_fear,:level_disappointment,:exposure_disappointment,:level_suprised,:exposure_suprised,:level_tired,:exposure_tired,:level_affection,:exposure_affection,:level_proud ,:exposure_proud,:level_concern,:exposure_concern)", {'id':id,'level_happy':'0','exposure_happy':0,'level_sad':'0','exposure_sad':0,'level_angry':'0','exposure_angry':0,'level_fear':'0','exposure_fear':0,'level_disappointment':'0','exposure_disappointment':0,'level_suprised':'0','exposure_suprised':0,'level_tired':'0','exposure_tired':0,'level_affection':'0','exposure_affection':0 ,'level_proud':'0' ,'exposure_proud':0,'level_concern':'0','exposure_concern':0})
         conn.commit()
       
+=======
+        c.execute("INSERT INTO users VALUES (:UserType,:first, :last,:age,:gender,:id,:id_parent,:username,:password,:time_limit)", {'UserType':UserType,'first':first, 'last':last,'age':age,'gender':gender,'id':id,'id_parent':id_parent,'username':username,'password':password,'time_limit':'23:59'})
+        if UserType.upper()=='U':
+            c.execute("INSERT INTO Time VALUES (:id,:day_time,:week_time,:total_time)", {'id':id,'day_time':'0','week_time':'0','total_time':'0'})
+            c.execute("INSERT INTO exposure_and_understanding VALUES (:id,:level_happy,:exposure_happy,:level_sad,:exposure_sad,:level_argry,:exposure_argry,:level_fear,:exposure_fear,:level_disappointment,:exposure_disappointment,:level_suprised,:exposure_suprised,:level_tired,:exposure_tired,:level_8,:exposure_8,:level_9 ,:exposure_9,:level_10,:exposure_10)", {'id':id,'level_happy':'0','exposure_happy':0,'level_sad':'0','exposure_sad':0,'level_argry':'0','exposure_argry':0,'level_fear':'0','exposure_fear':0,'level_disappointment':'0','exposure_disappointment':0,'level_suprised':'0','exposure_suprised':0,'level_tired':'0','exposure_tired':0,'level_8':'0','exposure_8':0 ,'level_9':'0' ,'exposure_9':0,'level_10':'0','exposure_10':0})
+        else:
+            c.execute("INSERT INTO reports VALUES (:id,:review,:first,:last,:date)", {'id':id,'review':'None','first':first,'last':last,'date':'00:00:0000'})
+        conn.commit()
+
+>>>>>>> tomer
 def Proper_ID(id):
     if len(id)==9:
         return True
@@ -287,8 +342,33 @@ def Manager_Add_Remove():
             print()
             print("Invalid Value, you returned to Manager menu")
                 
+<<<<<<< HEAD
 
         
+=======
+                
+                
+                
+def get_reports(id):
+    i=0
+    conn = sqlite3.connect('Data.db')    
+    cursor = conn.cursor()    
+    data = cursor.execute('''SELECT * From reports''')
+    data = data.fetchall()
+    for x in data:
+        print("review number: {0} by {1} {2} id number:{3} ,date:{4} ,the review: {5}".format(i,x[2],x[3],x[0],x[4],x[1]))
+        i+=1
+    
+    
+def check_boys_girls():
+    conn = sqlite3.connect('Data.db')
+    c = conn.cursor()
+    c.execute("SELECT COUNT (*) FROM users WHERE gender='B'")
+    BoysCount = c.fetchone()[0]    
+    c.execute("SELECT COUNT (*) FROM users WHERE gender='G'")
+    GirlsCount = c.fetchone()[0] 
+    print("Count of girls in the game:{1} , Count of boys in the game:{0}".format(BoysCount,GirlsCount))   
+>>>>>>> tomer
     
 
 def ManagerMenu(id):
@@ -304,20 +384,40 @@ def ManagerMenu(id):
 5.Profits from the game til now
 6.Update Code
 7.Total amount of players in the game
+<<<<<<< HEAD
 8.Logout""")
+=======
+8.Get total reports
+9.Logout""")
+>>>>>>> tomer
         x=int(input("Enter your choice:"))
         if x==1:
             print("FeedBack()-SOON")
                 
         elif x==2:
             Manager_Add_Remove()
+<<<<<<< HEAD
+=======
+        elif x==4:
+            print()
+            check_boys_girls()
+            print()
+>>>>>>> tomer
         elif x==5:
             sum=(50.99)*count_players()
             print()
             print("Your Profits: {0} shekel til now".format(sum))
             print()
+<<<<<<< HEAD
                 
         elif x==8:
+=======
+        elif x==7:
+            print("\nAmount of players in the game:",count_players())
+        elif x==8:
+            get_reports(id)
+        elif x==9:
+>>>>>>> tomer
             print()
             print("GoodBye manager")
             x=None
@@ -330,7 +430,10 @@ def ManagerMenu(id):
 def count_players():
     conn = sqlite3.connect('Data.db')
     c = conn.cursor()
+<<<<<<< HEAD
     count=0
+=======
+>>>>>>> tomer
     c.execute("SELECT COUNT (*) FROM users WHERE UserType='P'")
     rowcount = c.fetchone()[0]
     return rowcount
@@ -345,6 +448,41 @@ def is_parent_of_user(id_parent,id):
         return True
     return False
 
+<<<<<<< HEAD
+=======
+def  Limit_Your_Kid(id_parent):
+    id_kid=int(input("Enter the child that you want limit:"))
+    if is_parent_of_user(id_parent, id_kid):
+        set_time=input("Enter time limitation for you child:")
+        conn = sqlite3.connect('Data.db')
+        with conn as db:
+            cursor=db.cursor()
+        cursor.execute('''UPDATE users SET time_limit = ? WHERE id = ?''', (set_time,id_kid))
+        conn.commit()
+    else:
+        print("valid ID")
+    return 
+ 
+def review(id_parent):
+    report=input("Enter review about the game:")
+    now=(datetime.datetime.now())
+    conn = sqlite3.connect('Data.db')
+    with conn as db:
+        cursor=db.cursor()
+    cursor.execute('''UPDATE reports SET review = ? WHERE id = ?''', (report,id_parent))
+    y='{2}\{3}\{4} time:{0:0d}:{1:0d}'.format(now.hour,now.minute,now.day,now.month,now.year)
+    cursor.execute('''UPDATE reports SET date = ? WHERE id = ?''', (y,id_parent))
+    conn.commit()
+    
+def  totaltimeson(id_parent):
+     id=input("Enter you child id")
+     if not is_parent_of_user(id_parent, id):
+         print("Vaild ID")
+         return 
+     total=get_totaltime(id)
+     SecToTime(total) 
+     return
+>>>>>>> tomer
 def menu_parent(id_parent):
     Loop=True
     while Loop:
@@ -357,6 +495,7 @@ def menu_parent(id_parent):
         """)
         ans=int(input("Enter your choice:"))
         if ans==1:
+<<<<<<< HEAD
           print("Time limitetion()")
         elif ans==2:
           print("how much time()") 
@@ -364,6 +503,15 @@ def menu_parent(id_parent):
           print("Notification to sleep()")
         elif ans==4:
           print("feedback()")
+=======
+          Limit_Your_Kid(id_parent)
+        elif ans==2:
+            totaltimeson(id_parent)
+        elif ans==3:
+          print("Notification to sleep()")
+        elif ans==4:
+          review(id_parent)
+>>>>>>> tomer
         elif ans==5:
           print("goodbye")
           Loop = None
@@ -394,6 +542,11 @@ def play(id):
             elif message=='Caluction':
                 return endSec-startSec
         return time
+<<<<<<< HEAD
+=======
+    
+    
+>>>>>>> tomer
     def Time_Caluction(t,id):
         flag=t('end_time')
         update_time=t('Caluction')
@@ -417,6 +570,7 @@ def play(id):
                 c.execute("INSERT INTO feelings VALUES (:feel,:info, :question1,:Answer1_of_question1,:Answer2_of_question1,:Answer3_of_question1,:CurrectAnswer_of_question1,:question2,:Answer1_of_question2,:Answer2_of_question2,:Answer3_of_question2,:CurrectAnswer_of_question2,:question3,:Answer1_of_question3,:Answer2_of_question3,:Answer3_of_question3,:CurrectAnswer_of_question3)", {'feel':feel,'info':info, 'question1':question1,'Answer1_of_question1':Answer1_of_question1,'Answer2_of_question1':Answer2_of_question1,'Answer3_of_question1':Answer3_of_question1,'CurrectAnswer_of_question1':CurrectAnswer_of_question1,'question2':question2,'Answer1_of_question2':Answer1_of_question2,'Answer2_of_question2':Answer2_of_question2,'Answer3_of_question2':Answer3_of_question2,'CurrectAnswer_of_question2':CurrectAnswer_of_question2,'question3':question3,'Answer1_of_question3':Answer1_of_question3,'Answer2_of_question3':Answer2_of_question3,'Answer3_of_question3':Answer3_of_question3,'CurrectAnswer_of_question3':CurrectAnswer_of_question3})
                 conn.commit()    
     
+<<<<<<< HEAD
         insert_into_database_feelings('happy','Hapiness_Complete.png','Happy1_Complete.PNG','Angry','Smile','Cry',2,'Happy2_Complete.PNG','Happy','Sad','Anger',1,'Happy3_Complete.PNG','Anger','Sad','Happy',2)
         insert_into_database_feelings('sad','Sad_info.png','Sad1_Complete.PNG','Sad','fear','Anger',1,'Sad2_Complete.png','Happy','Sad','Anger',2,'Sad3_Complete.png','Anger','Sad','fear',2)
         insert_into_database_feelings('angry','Angry_Complete.png','Angry1_Complete.PNG','Happy','Sad','Angry',3,'Angry2_Complete.png','Anger','Happy','Fear',1,'Angry3_Complete.PNG','Fear','Sad','Anger',3) 
@@ -430,6 +584,25 @@ def play(id):
     
     
               
+=======
+        insert_into_database_feelings('happy','Hapiness_Complite.png','Happy1_Complete.PNG','Angry','Smile','Cry',2,'Happy2_Complete.PNG','Happy','Sad','Anger',1,'Happy3_Complete.PNG','Anger','Sad','Happy',2)
+        insert_into_database_feelings('sad','Sad_info.png','Sad1_Complete.PNG','Sad','fear','Anger',1,'Sad2_Complete.png','Happy','Sad','Anger',2,'Sad3_Complete.png','Anger','Sad','fear',2)
+        insert_into_database_feelings('angry','Angry_Complite.png','Anger1_Complete.PNG','Happy','Sad','Angry',3,'Anger2_Complete.png','Anger','Happy','Fear',1,'Anger3_Complete.PNG','Fear','Sad','Anger',3) 
+        insert_into_database_feelings('fear','Fear_Complite.png','Fear1_Complete.PNG','Happy','Sad','Fear',3,'Fear2_Complete.PNG','Sad','Fear','Anger',2,'Fear3_Complete.PNG','Fear','Sad','Happy',1)
+   
+    def updateTabel_exposure(id):
+        #x=['level_happy',1]
+        x='exposure_happy'
+        conn = sqlite3.connect('Data.db')
+        with conn as db:
+            cursor=db.cursor()
+        find=("SELECT * FROM exposure_and_understanding WHERE id=?")
+        cursor.execute(find,[id])
+        result=cursor.fetchall()
+        now=result[0][indexCard*2+2]
+        cursor.execute('''UPDATE exposure_and_understanding SET exposure_happy = ? WHERE id = ?''', (now+1, id))
+        conn.commit()
+>>>>>>> tomer
         
         
     def Reset_dictionary():
@@ -455,6 +628,7 @@ def play(id):
         color=randrange(0,255)
         ans=result[0][6+level[x]]
     
+<<<<<<< HEAD
     def updateTabel_exposure(id):
         conn = sqlite3.connect('Data.db')
         with conn as db:
@@ -603,6 +777,10 @@ def play(id):
         
     
     
+=======
+    
+
+>>>>>>> tomer
     def Random():#return random number to indexCard 
         while True:
             rand=randrange(0,len(arr_feelings))
@@ -626,12 +804,33 @@ def play(id):
         else:
             screen.blit(Card_question,(140,10))
         
+<<<<<<< HEAD
     
     pygame.init()
     pygame.display.set_caption("Moment of Emotion") 
     screen=pygame.display.set_mode((800,800)) 
     arr_feelings=['happy','sad','angry','fear','disappointment','surprised','tired','affection','proud','concern']
     level={'happy':0,'sad':0,'angry':0,'fear':0,'disappointment':0,'surprised':0,'tired':0,'affection':0,'proud':0,'concern':0}
+=======
+    def Limit():
+        with sqlite3.connect("Data.db") as db:
+            cursor=db.cursor()
+        find_id=("SELECT * FROM users WHERE id=?")
+        cursor.execute(find_id,[(id)])
+        result=cursor.fetchall()
+        limitation=result[0][9]
+        y=limitation.split(':')
+        now=datetime.datetime.now()
+        if int(now.hour)>=int(y[0]) and int(now.minute)>=int(y[1]):
+            return True
+        return False
+        
+    pygame.init()
+    pygame.display.set_caption("Moment of Emotion") 
+    screen=pygame.display.set_mode((800,800)) 
+    arr_feelings=['happy','sad','angry','fear']
+    level={'happy':0,'sad':0,'angry':0,'fear':0}
+>>>>>>> tomer
     indexCard=0
     indexTypeCard=0
     running=True
@@ -652,6 +851,10 @@ def play(id):
                 if questionButton.isOver(pos) :
                     if(indexTypeCard==0):
                         indexTypeCard+=1 
+<<<<<<< HEAD
+=======
+                        #UpdateCard()
+>>>>>>> tomer
                 elif Button1.isOver(pos) and indexTypeCard==1:
                         if not ans==1:
                             Mistake1=False
@@ -659,8 +862,12 @@ def play(id):
                             Mistake1=True
                             Mistake2=True
                             Mistake3=True 
+<<<<<<< HEAD
                             level[x]+=5
                             updateTabel_exposure(id)
+=======
+                            level[x]+=5      
+>>>>>>> tomer
                             indexCard=Random()
                             indexTypeCard=0
                             UpdateCard()
@@ -671,8 +878,12 @@ def play(id):
                             Mistake1=True
                             Mistake2=True
                             Mistake3=True 
+<<<<<<< HEAD
                             level[x]+=5
                             updateTabel_exposure(id)      
+=======
+                            level[x]+=5      
+>>>>>>> tomer
                             indexCard=Random()
                             indexTypeCard=0
                             UpdateCard()
@@ -683,8 +894,12 @@ def play(id):
                             Mistake1=True
                             Mistake2=True
                             Mistake3=True 
+<<<<<<< HEAD
                             level[x]+=5
                             updateTabel_exposure(id)      
+=======
+                            level[x]+=5      
+>>>>>>> tomer
                             indexCard=Random()
                             indexTypeCard=0
                             UpdateCard()
@@ -718,11 +933,18 @@ def play(id):
                 else:
                     Button3.color=(255,0,0)
                 
+<<<<<<< HEAD
         if event.type==pygame.QUIT:
             Time_Caluction(t,id)
             running=False
             exit(1)
         
+=======
+        if event.type==pygame.QUIT or Limit() :
+            Time_Caluction(t,id)
+            running=False
+            exit(1)
+>>>>>>> tomer
         RedWindow()
         feel_Card()
         pygame.display.flip()
