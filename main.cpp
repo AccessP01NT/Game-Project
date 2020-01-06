@@ -2,10 +2,11 @@
 #include <string>
 #include "Student.h"
 #include "Employee.h"
-#include "WorkingSudent.h"
+#include "WorkingStudent.h"
 #define size 4
 int main() {
 	int type,age,average;
+	bool same_institute;
 	long id;
 	float salary;
 	string name, institute;
@@ -47,7 +48,21 @@ int main() {
 			arr[i] = new Employee(name, age, id, salary);
 		}
 		else if (type == 4) {
-			exit(1);
+			cout << "Name:" << name << endl;
+			cin >> name;
+			cout << "age:" << age << endl;
+			cin >> age;
+			cout << "id:" << id << endl;
+			cin >> id;
+			cout << "salary:" << institute << endl;
+			cin >> salary;
+			cout << "institute:" << institute << endl;
+			cin >> institute;
+			cout << "average:" << institute << endl;
+			cin >> average;
+			cout << "same_institute:" << institute << endl;
+			cin >> same_institute;
+			arr[i]=new WorkingStudent(name, age, id, salary, institute, average, same_institute);
 		}
 	}
 	for (int i = 0; i < size; i++) {
