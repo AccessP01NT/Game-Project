@@ -103,4 +103,34 @@ def Manager_Add_Remove():
             print()
             print("Invalid Value, you returned to Manager menu")
                 
+def menu_parent(id_parent):
+    Loop=True
+    while Loop:
+        print("""
+        1.Time limitetion
+        2.Total play time of the son
+        3.Enter feedback
+        4.level of your son
+        5.exposure to feelings of your son
+        6.Logout
+        """)
+        ans=(input("Enter your choice:"))
+        if ans=='1':
+          Limit_Your_Kid(id_parent)
+        elif ans=='2':
+            totaltimeson(id_parent)
+        elif ans=='3':
+          review(id_parent)
+        elif ans=='4':
+            level_feelings(id_parent)
+        elif ans=='5':
+            exposure_to_feelings(id_parent)
+        elif ans=='6':
+          print("goodbye")
+          Loop = None
+          Menu()
+          break
+          
+        else:
+           print("\n InValid Choice Try again")
                 
