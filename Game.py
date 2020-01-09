@@ -316,4 +316,30 @@ def Create_Table():
     )""")
 
 
+def Menu():
+    print()
+    conn = sqlite3.connect('Data.db')
+    c = conn.cursor()
+    Create_Table()
+    print("Welcome to Moment Of Emotion Game")
+    ans=True
+    while ans:
+        print("""
+        1.Login
+        2.Register
+        3.Exit/Quit
+        """)
+        ans=(input("Enter your choice:"))
+        if ans=='1':  
+          login()
+          ans=None
+        elif ans=='2':
+          Registerion()
+        elif ans=='3':
+          print("\n Goodbye") 
+          ans = None
+          conn.close()
+        else:
+           print("\n Not Valid Choice Try again")
+
                 
