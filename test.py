@@ -503,3 +503,429 @@ concern: {9}""".format(x[2],x[4],x[6],x[8],x[10],x[12],x[14],x[16],x[18],x[20]))
     else:
         print("Vaild ID")
     return
+
+
+def menu_parent(id_parent):
+    Loop=True
+    while Loop:
+        print("""
+        1.Time limitetion
+        2.Total play time of the son
+        3.Enter feedback
+        4.level of your son
+        5.exposure to feelings of your son
+        6.Logout
+        """)
+        ans=(input("Enter your choice:"))
+        if ans=='1':
+          Limit_Your_Kid(id_parent)
+        elif ans=='2':
+            totaltimeson(id_parent)
+        elif ans=='3':
+          review(id_parent)
+        elif ans=='4':
+            level_feelings(id_parent)
+        elif ans=='5':
+            exposure_to_feelings(id_parent)
+        elif ans=='6':
+          print("goodbye")
+          Loop = None
+          Menu()
+          break
+          
+        else:
+           print("\n InValid Choice Try again")
+    
+    
+def play(id):
+    def calucate_time():
+        startSec=0
+        endSec=0
+        start=datetime.datetime.now()
+        def time(message):
+            if message=='start_time':
+                nonlocal startSec,start
+                start=datetime.datetime.now()
+                startSec=start.hour*3600+start.minute*60+start.second
+            elif message=='end_time':
+                nonlocal endSec
+                end=datetime.datetime.now()
+                endSec=end.hour*3600+end.minute*60+end.second
+                if not(end.day - start.day == 0):
+                    return 1
+                return 0
+            elif message=='Caluction':
+                return endSec-startSec
+        return time
+    
+    
+    def Time_Caluction(t,id):
+        flag=t('end_time')
+        update_time=t('Caluction')
+        conn = sqlite3.connect('Data.db')
+        with conn as db:
+            cursor=db.cursor()
+        find=("SELECT * FROM Time WHERE id=?")
+        cursor.execute(find,[id])
+        result=cursor.fetchall()
+        total_time=str(int(result[0][1])+update_time)
+        cursor.execute('''UPDATE Time SET total_time = ? WHERE id = ?''', (total_time, id))
+        conn.commit()
+       
+    def Insert():#Insert details to DB feelings table
+            def insert_into_database_feelings(feel,info,question1,Answer1_of_question1,Answer2_of_question1,Answer3_of_question1,CurrectAnswer_of_question1,question2,Answer1_of_question2,Answer2_of_question2,Answer3_of_question2,CurrectAnswer_of_question2,question3,Answer1_of_question3,Answer2_of_question3,Answer3_of_question3,CurrectAnswer_of_question3):
+                conn = sqlite3.connect('Data.db')
+                c = conn.cursor()
+                with conn:
+                    c.execute("INSERT INTO feelings VALUES (:feel,:info, :question1,:Answer1_of_question1,:Answer2_of_question1,:Answer3_of_question1,:CurrectAnswer_of_question1,:question2,:Answer1_of_question2,:Answer2_of_question2,:Answer3_of_question2,:CurrectAnswer_of_question2,:question3,:Answer1_of_question3,:Answer2_of_question3,:Answer3_of_question3,:CurrectAnswer_of_question3)", {'feel':feel,'info':info, 'question1':question1,'Answer1_of_question1':Answer1_of_question1,'Answer2_of_question1':Answer2_of_question1,'Answer3_of_question1':Answer3_of_question1,'CurrectAnswer_of_question1':CurrectAnswer_of_question1,'question2':question2,'Answer1_of_question2':Answer1_of_question2,'Answer2_of_question2':Answer2_of_question2,'Answer3_of_question2':Answer3_of_question2,'CurrectAnswer_of_question2':CurrectAnswer_of_question2,'question3':question3,'Answer1_of_question3':Answer1_of_question3,'Answer2_of_question3':Answer2_of_question3,'Answer3_of_question3':Answer3_of_question3,'CurrectAnswer_of_question3':CurrectAnswer_of_question3})
+                    conn.commit()    
+        
+            insert_into_database_feelings('happy','Hapiness_Complete.png','Happy1_Complete.PNG','Angry','Smile','Cry',2,'Happy2_Complete.PNG','Happy','Sad','Anger',1,'Happy3_Complete.PNG','Anger','Sad','Happy',2)
+            insert_into_database_feelings('sad','Sadness_Complete.png','Sad1_Complete.PNG','Sad','fear','Anger',1,'Sad2_Complete.png','Happy','Sad','Anger',2,'Sad3_Complete.png','Anger','Sad','fear',2)
+            insert_into_database_feelings('angry','Angry_Complete.png','Anger1_Complete.PNG','Happy','Sad','Angry',3,'Anger2_Complete.png','Anger','Happy','Fear',1,'Anger3_Complete.PNG','Fear','Sad','Anger',3) 
+            insert_into_database_feelings('fear','Fear_Complete.png','Fear1_Complete.PNG','Happy','Sad','Fear',3,'Fear2_Complete.PNG','Sad','Fear','Anger',2,'Fear3_Complete.PNG','Fear','Sad','Happy',1)
+            insert_into_database_feelings('disappointment','Disappointment_Complete.png','Disappointment1_Complete.png','Disappoint','Smile','tired',1,'Disappointment2_Complete.PNG','Happy','Disappoint','Anger',2,'Disappointment3_Complete.PNG','Anger','Disappoint','Happy',2)
+            insert_into_database_feelings('surprised','Surprised_Complete.png','Surprised1_Complete.PNG','Surprised','fear','Anger',1,'Surprised2_Complete.png','Happy','Sad','Surprised',2,'Surprised3_Complete.png','Anger','Surprised','Fear',2)
+            insert_into_database_feelings('tired','Tired_Complete.png','Tired1_Complete.PNG','Tired','Sad','Angry',1,'Tired2_Complete.png','Anger','Tired','Fear',2,'Tired3_Complete.PNG','Fear','Sad','Tired',3) 
+            insert_into_database_feelings('affection','Affection_Complete.png','Affection1_Complete.PNG','Affection','Sad','Fear',1,'Affection2_Complete.PNG','Sad','Affection','Anger',2,'Affection3_Complete.PNG','Fear','Sad','Affection',3)
+            insert_into_database_feelings('proud','Proud_Complete.png','Proud1_Complete.PNG','Happy','Proud','Angry',2,'Proud2_Complete.png','Proud','Happy','Fear',1,'Proud3_Complete.PNG','Fear','Sad','Proud',3) 
+            insert_into_database_feelings('concern','Concern_Complete.png','Concern1_Complete.PNG','Happy','Sad','Concern',3,'Concern2_Complete.PNG','Sad','Concern','Anger',2,'Concern3_Complete.PNG','Concern','Sad','Happy',1)       
+    Insert()
+    def updateTabel_exposure(id):
+        conn = sqlite3.connect('Data.db')
+        with conn as db:
+            cursor=db.cursor()
+        find=("SELECT * FROM exposure_and_understanding WHERE id=?")
+        cursor.execute(find,[id])
+        result=cursor.fetchall()
+        now=result[0][indexCard*2+2]
+        now1=result[0][indexCard*2+1]
+        if(indexCard==0):
+            cursor.execute('''UPDATE exposure_and_understanding SET exposure_happy = ? WHERE id = ?''', (now+1, id))
+            conn.commit()
+            if not now1 == 'high':
+                if level[x]==5:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_happy = ? WHERE id = ?''', ('low', id))
+                    conn.commit()
+                    
+                if level[x]==10:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_happy = ? WHERE id = ?''', ('medium', id))
+                    conn.commit()
+                    
+                if level[x]==15:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_happy = ? WHERE id = ?''', ('high', id))
+                    conn.commit()
+                    
+    
+        elif(indexCard==1):
+            cursor.execute('''UPDATE exposure_and_understanding SET exposure_sad = ? WHERE id = ?''', (now+1, id))
+            conn.commit()
+            if not now1 == 'high':
+                if level[x]==5:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_sad = ? WHERE id = ?''', ('low', id))
+                    conn.commit()
+                if level[x]==10:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_sad = ? WHERE id = ?''', ('medium', id))
+                    conn.commit()
+                if level[x]==15:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_sad = ? WHERE id = ?''', ('high', id))
+                    conn.commit()
+        elif(indexCard==2):
+            cursor.execute('''UPDATE exposure_and_understanding SET exposure_angry = ? WHERE id = ?''', (now+1, id))
+            conn.commit()
+            if not now1 == 'high':
+                if level[x]==5:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_angry = ? WHERE id = ?''', ('low', id))
+                    conn.commit()
+                if level[x]==10:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_angry = ? WHERE id = ?''', ('medium', id))
+                    conn.commit()
+                if level[x]==15:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_angry = ? WHERE id = ?''', ('high', id))
+                    conn.commit()
+        elif(indexCard==3):
+            cursor.execute('''UPDATE exposure_and_understanding SET exposure_fear = ? WHERE id = ?''', (now+1, id))
+            conn.commit()
+            if not now1 == 'high':
+                if level[x]==5:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_fear = ? WHERE id = ?''', ('low', id))
+                    conn.commit()
+                if level[x]==10:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_fear = ? WHERE id = ?''', ('medium', id))
+                    conn.commit()
+                if level[x]==15:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_fear = ? WHERE id = ?''', ('high', id))
+                    conn.commit()
+        elif(indexCard==4):
+            cursor.execute('''UPDATE exposure_and_understanding SET exposure_disappointment = ? WHERE id = ?''', (now+1, id))
+            conn.commit()
+            if not now1 == 'high':
+                if level[x]==5:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_disappointment = ? WHERE id = ?''', ('low', id))
+                    conn.commit()
+                if level[x]==10:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_disappointment = ? WHERE id = ?''', ('medium', id))
+                    conn.commit()
+                if level[x]==15:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_disappointment = ? WHERE id = ?''', ('high', id))
+                    conn.commit()
+                    
+        elif(indexCard==5):
+            cursor.execute('''UPDATE exposure_and_understanding SET exposure_suprised = ? WHERE id = ?''', (now+1, id))
+            conn.commit()
+            if not now1 == 'high':
+                if level[x]==5:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_suprised = ? WHERE id = ?''', ('low', id))
+                    conn.commit()
+                if level[x]==10:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_suprised = ? WHERE id = ?''', ('medium', id))
+                    conn.commit()
+                if level[x]==15:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_suprised = ? WHERE id = ?''', ('high', id))
+                    conn.commit()
+        elif(indexCard==6):
+            cursor.execute('''UPDATE exposure_and_understanding SET exposure_tired = ? WHERE id = ?''', (now+1, id))
+            conn.commit()
+            if not now1 == 'high':
+                if level[x]==5:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_tired = ? WHERE id = ?''', ('low', id))
+                    conn.commit()
+                if level[x]==10:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_tired = ? WHERE id = ?''', ('medium', id))
+                    conn.commit()
+                if level[x]==15:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_tired = ? WHERE id = ?''', ('high', id))
+                    conn.commit()
+        elif(indexCard==7):
+            cursor.execute('''UPDATE exposure_and_understanding SET exposure_affection = ? WHERE id = ?''', (now+1, id))
+            conn.commit()
+            if not now1 == 'high':
+                if level[x]==5:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_affection = ? WHERE id = ?''', ('low', id))
+                    conn.commit()
+                if level[x]==10:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_affection = ? WHERE id = ?''', ('medium', id))
+                    conn.commit()
+                if level[x]==15:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_affection = ? WHERE id = ?''', ('high', id))
+                    conn.commit()
+        elif(indexCard==8):
+            cursor.execute('''UPDATE exposure_and_understanding SET exposure_proud = ? WHERE id = ?''', (now+1, id))
+            conn.commit()
+            if not now1 == 'high':
+                if level[x]==5:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_proud = ? WHERE id = ?''', ('low', id))
+                    conn.commit()
+                if level[x]==10:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_proud = ? WHERE id = ?''', ('medium', id))
+                    conn.commit()
+                if level[x]==15:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_proud = ? WHERE id = ?''', ('high', id))
+                    conn.commit()
+        elif(indexCard==9):
+            cursor.execute('''UPDATE exposure_and_understanding SET exposure_concern = ? WHERE id = ?''', (now+1, id))
+            conn.commit()
+            if not now1 == 'high':
+                if level[x]==5:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_concern = ? WHERE id = ?''', ('low', id))
+                    conn.commit()
+                if level[x]==10:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_concern = ? WHERE id = ?''', ('medium', id))
+                    conn.commit()
+                if level[x]==15:
+                    cursor.execute('''UPDATE exposure_and_understanding SET level_concern = ? WHERE id = ?''', ('high', id))
+                    conn.commit()
+        
+        
+        
+    def Reset_dictionary():
+        for x in level:
+            if level[x]==15:
+                level[x]=0
+    def UpdateCard():#Updating from DB the Cards and buttons
+        global x
+        x=arr_feelings[indexCard]
+        Reset_dictionary()
+        with sqlite3.connect("Data.db") as db:
+            cursor=db.cursor()
+        find_feelings=("SELECT * FROM feelings WHERE feel=?")
+        cursor.execute(find_feelings,[(x)])
+        result=cursor.fetchall()
+        global Card_info,Card_question,Button1,Button2,Button3,questionButton,color,ans,diceButton
+        Card_info=pygame.image.load(result[0][1])
+        Card_question=pygame.image.load(result[0][2+level[x]])
+        Button1=button((255,255,255),300,430,250,40,result[0][3+level[x]])
+        Button2=button((255,255,255),300,530,250,40,result[0][4+level[x]])
+        Button3=button((255,255,255),300,630,250,40,result[0][5+level[x]])
+        questionButton=button((255,255,255),300,680,250,100,'Question')
+        diceButton=button((255,255,255),300,680,250,100,'dice')
+        color=randrange(0,255)
+        ans=result[0][6+level[x]]
+    
+    
+
+    def Random():#return random number to indexCard 
+        while True:
+            rand=randrange(0,len(arr_feelings))
+            if(rand!=indexCard):
+                return rand        
+            
+    def RedWindow():#Building the buttons
+        if(indexTypeCard==0):
+            screen.fill((color,150,100))
+            questionButton.draw(screen,(0,0,0))
+            
+        elif (indexTypeCard==2):
+            screen.fill((color,131,180))
+            diceButton.draw(screen,(0,0,0))
+            
+        else:
+            screen.fill((color,131,180))
+            Button1.draw(screen,(0,0,0))
+            Button2.draw(screen,(0,0,0))
+            Button3.draw(screen,(0,0,0))
+    
+    
+    def feel_Card():#Building the cards
+        if(indexTypeCard==0):
+            screen.blit(Card_info,(200,10))
+        elif(indexTypeCard==2):
+            table=pygame.image.load("table.png")
+            screen.blit(table,(101,10))
+        elif indexTypeCard==3:
+            screen.fill((color,139,110))
+            sleep=pygame.image.load("sleep.jpg")
+            screen.blit(sleep,(200,10))
+            
+            
+        else:
+            screen.blit(Card_question,(140,10))
+    def is_over_time(time):
+        now=datetime.datetime.now()
+        if int(now.hour)>int(time[0]):
+            return True
+        elif int(now.hour)==int(time[0]) and int(now.minute)>=int(time[1]):
+            return True
+        return False
+            
+    def Limit():
+        with sqlite3.connect("Data.db") as db:
+            cursor=db.cursor()
+        find_id=("SELECT * FROM users WHERE id=?")
+        cursor.execute(find_id,[(id)])
+        result=cursor.fetchall()
+        limitation=result[0][9]
+        y=limitation.split(':')
+        return is_over_time(y)
+        
+    pygame.init()
+    pygame.display.set_caption("Moment of Emotion") 
+    screen=pygame.display.set_mode((800,800)) 
+    arr_feelings=['happy','sad','angry','fear','disappointment','surprised','tired','affection','proud','concern']
+    level={'happy':0,'sad':0,'angry':0,'fear':0,'disappointment':0,'surprised':0,'tired':0,'affection':0,'proud':0,'concern':0}
+    indexCard=-1
+    indexCard=Random()
+    indexTypeCard=2
+    running=True
+    Mistake1=True
+    Mistake2=True
+    Mistake3=True
+    t=calucate_time()
+    UpdateCard()
+    k=True
+    once_only=True
+    while running: #Loop keep the window on
+        if once_only==True:
+            t('start_time')
+            once_only=False
+        if Limit():
+            indexTypeCard=3
+            feel_Card()
+        for event in pygame.event.get():
+            pos=pygame.mouse.get_pos()
+            if event.type==pygame.MOUSEBUTTONDOWN:#Pressing on button
+                if questionButton.isOver(pos) :
+                    if(indexTypeCard==0):
+                        indexTypeCard+=1 
+                if diceButton.isOver(pos) :
+                    if(indexTypeCard==2):
+                        indexTypeCard=0 
+                        indexCard=Random()
+                elif Button1.isOver(pos) and indexTypeCard==1:
+                        if not ans==1:
+                            Mistake1=False
+                        else:
+                            Mistake1=True
+                            Mistake2=True
+                            Mistake3=True 
+                            level[x]+=5   
+                            updateTabel_exposure(id)                             
+                            indexTypeCard=2
+                            UpdateCard()
+                elif Button2.isOver(pos) and indexTypeCard==1:
+                        if not ans==2:
+                            Mistake2=False
+                        else:
+                            Mistake1=True
+                            Mistake2=True
+                            Mistake3=True 
+                            level[x]+=5      
+                            updateTabel_exposure(id)                            
+                            indexTypeCard=2
+                            UpdateCard()
+                elif Button3.isOver(pos) and indexTypeCard==1:
+                        if not ans==3:
+                            Mistake3=False
+                        else:
+                            Mistake1=True
+                            Mistake2=True
+                            Mistake3=True 
+                            level[x]+=5      
+                            updateTabel_exposure(id)                           
+                            indexTypeCard=2
+                            UpdateCard()
+                        
+            if event.type==pygame.MOUSEMOTION: 
+                
+                if questionButton.isOver(pos) and indexTypeCard==0:
+                    questionButton.color=(255,0,0)
+                else:
+                    questionButton.color=(0,255,0)
+                    
+                if diceButton.isOver(pos) and indexTypeCard==2:
+                    diceButton.color=(255,0,0)
+                else:
+                    diceButton.color=(0,255,0)
+                if Mistake1:
+                    
+                    if Button1.isOver(pos):
+                        Button1.color=(255,0,0)
+                    else:
+                        Button1.color=(0,255,0)
+                else:
+                    Button1.color=(255,0,0)
+                if Mistake2:
+                    if Button2.isOver(pos):
+                        Button2.color=(255,0,0)
+                    else:
+                        Button2.color=(0,255,0)
+                else:
+                    Button2.color=(255,0,0)
+                if Mistake3:
+                    if Button3.isOver(pos):
+                        Button3.color=(255,0,0)
+                    else:
+                        Button3.color=(0,255,0)
+                else:
+                    Button3.color=(255,0,0)
+        
+        if event.type==pygame.QUIT   :      
+            Time_Caluction(t,id)
+            running=False
+            pygame.display.quit()
+            pygame.quit()
+            break
+        RedWindow()
+        feel_Card()
+        pygame.display.flip()
+Menu()
