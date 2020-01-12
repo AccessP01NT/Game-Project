@@ -447,3 +447,10 @@ def get_reports(id):
         for x in data:
             print("\nreview number: {0} by {1} {2} id number:{3} ,date:{4} ,the review: {5}".format(i,x[2],x[3],x[0],x[4],x[1]))
             i+=1
+
+def count_players():
+    conn = sqlite3.connect('Data.db')
+    c = conn.cursor()
+    c.execute("SELECT COUNT (*) FROM users WHERE UserType='P'")
+    rowcount = c.fetchone()[0]
+    return rowcount
