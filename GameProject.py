@@ -810,5 +810,21 @@ def updateTabel_exposure(id):
             if level[x]==15:
                 cursor.execute('''UPDATE exposure_and_understanding SET level_concern = ? WHERE id = ?''', ('high', id))
                 conn.commit()
-    
+    def is_over_time(time):
+        now=datetime.datetime.now()
+        if int(now.hour)>int(time[0]):
+            return True
+        elif int(now.hour)==int(time[0]) and int(now.minute)>=int(time[1]):
+            return True
+        return False
+            
+    def Limit():
+        with sqlite3.connect("Data.db") as db:
+            cursor=db.cursor()
+        find_id=("SELECT * FROM users WHERE id=?")
+        cursor.execute(find_id,[(id)])
+        result=cursor.fetchall()
+        limitation=result[0][9]
+        y=limitation.split(':')
+        return is_over_time(y)
     
