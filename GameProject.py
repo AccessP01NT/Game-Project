@@ -639,3 +639,176 @@ def play(id):
                                       'Concern3_Complete.PNG', 'Concern', 'Sad', 'Happy', 1)
 
     Insert()
+
+
+def Random():#return random number to indexCard 
+        while True:
+            rand=randrange(0,len(arr_feelings))
+            if(rand!=indexCard):
+                return rand        
+            
+def RedWindow():#Building the buttons
+    if(indexTypeCard==0):
+        screen.fill((color,150,100))
+        questionButton.draw(screen,(0,0,0))
+        
+    elif (indexTypeCard==2):
+        screen.fill((color,131,180))
+        diceButton.draw(screen,(0,0,0))
+        
+    else:
+        screen.fill((color,131,180))
+        Button1.draw(screen,(0,0,0))
+        Button2.draw(screen,(0,0,0))
+        Button3.draw(screen,(0,0,0))
+
+
+
+
+
+def updateTabel_exposure(id):
+    conn = sqlite3.connect('Data.db')
+    with conn as db:
+        cursor=db.cursor()
+    find=("SELECT * FROM exposure_and_understanding WHERE id=?")
+    cursor.execute(find,[id])
+    result=cursor.fetchall()
+    now=result[0][indexCard*2+2]
+    now1=result[0][indexCard*2+1]
+    if(indexCard==0):
+        cursor.execute('''UPDATE exposure_and_understanding SET exposure_happy = ? WHERE id = ?''', (now+1, id))
+        conn.commit()
+        if not now1 == 'high':
+            if level[x]==5:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_happy = ? WHERE id = ?''', ('low', id))
+                conn.commit()
+                
+            if level[x]==10:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_happy = ? WHERE id = ?''', ('medium', id))
+                conn.commit()
+                
+            if level[x]==15:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_happy = ? WHERE id = ?''', ('high', id))
+                conn.commit()
+                
+
+    elif(indexCard==1):
+        cursor.execute('''UPDATE exposure_and_understanding SET exposure_sad = ? WHERE id = ?''', (now+1, id))
+        conn.commit()
+        if not now1 == 'high':
+            if level[x]==5:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_sad = ? WHERE id = ?''', ('low', id))
+                conn.commit()
+            if level[x]==10:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_sad = ? WHERE id = ?''', ('medium', id))
+                conn.commit()
+            if level[x]==15:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_sad = ? WHERE id = ?''', ('high', id))
+                conn.commit()
+    elif(indexCard==2):
+        cursor.execute('''UPDATE exposure_and_understanding SET exposure_angry = ? WHERE id = ?''', (now+1, id))
+        conn.commit()
+        if not now1 == 'high':
+            if level[x]==5:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_angry = ? WHERE id = ?''', ('low', id))
+                conn.commit()
+            if level[x]==10:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_angry = ? WHERE id = ?''', ('medium', id))
+                conn.commit()
+            if level[x]==15:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_angry = ? WHERE id = ?''', ('high', id))
+                conn.commit()
+    elif(indexCard==3):
+        cursor.execute('''UPDATE exposure_and_understanding SET exposure_fear = ? WHERE id = ?''', (now+1, id))
+        conn.commit()
+        if not now1 == 'high':
+            if level[x]==5:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_fear = ? WHERE id = ?''', ('low', id))
+                conn.commit()
+            if level[x]==10:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_fear = ? WHERE id = ?''', ('medium', id))
+                conn.commit()
+            if level[x]==15:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_fear = ? WHERE id = ?''', ('high', id))
+                conn.commit()
+    elif(indexCard==4):
+        cursor.execute('''UPDATE exposure_and_understanding SET exposure_disappointment = ? WHERE id = ?''', (now+1, id))
+        conn.commit()
+        if not now1 == 'high':
+            if level[x]==5:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_disappointment = ? WHERE id = ?''', ('low', id))
+                conn.commit()
+            if level[x]==10:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_disappointment = ? WHERE id = ?''', ('medium', id))
+                conn.commit()
+            if level[x]==15:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_disappointment = ? WHERE id = ?''', ('high', id))
+                conn.commit()
+                
+    elif(indexCard==5):
+        cursor.execute('''UPDATE exposure_and_understanding SET exposure_suprised = ? WHERE id = ?''', (now+1, id))
+        conn.commit()
+        if not now1 == 'high':
+            if level[x]==5:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_suprised = ? WHERE id = ?''', ('low', id))
+                conn.commit()
+            if level[x]==10:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_suprised = ? WHERE id = ?''', ('medium', id))
+                conn.commit()
+            if level[x]==15:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_suprised = ? WHERE id = ?''', ('high', id))
+                conn.commit()
+    elif(indexCard==6):
+        cursor.execute('''UPDATE exposure_and_understanding SET exposure_tired = ? WHERE id = ?''', (now+1, id))
+        conn.commit()
+        if not now1 == 'high':
+            if level[x]==5:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_tired = ? WHERE id = ?''', ('low', id))
+                conn.commit()
+            if level[x]==10:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_tired = ? WHERE id = ?''', ('medium', id))
+                conn.commit()
+            if level[x]==15:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_tired = ? WHERE id = ?''', ('high', id))
+                conn.commit()
+    elif(indexCard==7):
+        cursor.execute('''UPDATE exposure_and_understanding SET exposure_affection = ? WHERE id = ?''', (now+1, id))
+        conn.commit()
+        if not now1 == 'high':
+            if level[x]==5:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_affection = ? WHERE id = ?''', ('low', id))
+                conn.commit()
+            if level[x]==10:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_affection = ? WHERE id = ?''', ('medium', id))
+                conn.commit()
+            if level[x]==15:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_affection = ? WHERE id = ?''', ('high', id))
+                conn.commit()
+    elif(indexCard==8):
+        cursor.execute('''UPDATE exposure_and_understanding SET exposure_proud = ? WHERE id = ?''', (now+1, id))
+        conn.commit()
+        if not now1 == 'high':
+            if level[x]==5:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_proud = ? WHERE id = ?''', ('low', id))
+                conn.commit()
+            if level[x]==10:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_proud = ? WHERE id = ?''', ('medium', id))
+                conn.commit()
+            if level[x]==15:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_proud = ? WHERE id = ?''', ('high', id))
+                conn.commit()
+    elif(indexCard==9):
+        cursor.execute('''UPDATE exposure_and_understanding SET exposure_concern = ? WHERE id = ?''', (now+1, id))
+        conn.commit()
+        if not now1 == 'high':
+            if level[x]==5:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_concern = ? WHERE id = ?''', ('low', id))
+                conn.commit()
+            if level[x]==10:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_concern = ? WHERE id = ?''', ('medium', id))
+                conn.commit()
+            if level[x]==15:
+                cursor.execute('''UPDATE exposure_and_understanding SET level_concern = ? WHERE id = ?''', ('high', id))
+                conn.commit()
+    
+    
