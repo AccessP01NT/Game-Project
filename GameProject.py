@@ -435,3 +435,15 @@ def check_boys_girls():
     print("Count of girls in the game:{1} , Count of boys in the game:{0}".format(BoysCount,GirlsCount))
             
 
+def get_reports(id):
+    i=1
+    conn = sqlite3.connect('Data.db')    
+    cursor = conn.cursor()    
+    data = cursor.execute('''SELECT * From reports''')
+    data = data.fetchall()
+    if not data:
+        print("\nNo reports\n")
+    else:
+        for x in data:
+            print("\nreview number: {0} by {1} {2} id number:{3} ,date:{4} ,the review: {5}".format(i,x[2],x[3],x[0],x[4],x[1]))
+            i+=1
