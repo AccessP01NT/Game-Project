@@ -318,3 +318,38 @@ concern: {9}""".format(x[2],x[4],x[6],x[8],x[10],x[12],x[14],x[16],x[18],x[20]))
     return
       
 
+
+def is_proper_time(time):
+    set_time=time.split(':')
+    if 0<=int(set_time[0])<=23 and 0<=int(set_time[1])<=59:
+        return True
+    return False
+
+def  Limit_Your_Kid(id_parent):
+    id_kid=int(input("Enter the child that you want limit:"))
+    while not Proper_ID(id_kid):
+        id_kid=int(input("Enter the child that you want limit again:"))
+    
+    if is_parent_of_user(id_parent, id_kid):
+        set_time=input("Enter time limitation for you child:")
+        while not is_proper_time(set_time):
+            set_time=input("Incorrect time, enter time limitation for you child again:")
+        conn = sqlite3.connect('Data.db')
+        with conn as db:
+            cursor=db.cursor()
+        cursor.execute('''UPDATE users SET time_limit = ? WHERE id = ?''', (set_time,id_kid))
+        conn.commit()
+    else:
+        print("valid ID")
+    return True
+ 
+def review(id_parent):
+    report=input("Enter review about the game:")
+    now=(datetime.datetime.now())
+    conn = sqlite3.connect('Data.db')
+    with conn as db:
+        cursor=db.cursor()
+    cursor.execute('''UPDATE reports SET review = ? WHERE id = ?''', (report,id_parent))
+    y='{2}\{3}\{4} time:{0:0d}:{1:0d}'.format(now.hour,now.minute,now.day,now.month,now.year)
+    cursor.execute('''UPDATE reports SET date = ? WHERE id = ?''', (y,id_parent))
+    conn.commit()
