@@ -828,3 +828,156 @@ def updateTabel_exposure(id):
         y=limitation.split(':')
         return is_over_time(y)
     
+    def Reset_dictionary():
+        for x in level:
+            if level[x]==15:
+                level[x]=0
+    
+    def UpdateCard():#Updating from DB the Cards and buttons
+        global x
+        x=arr_feelings[indexCard]
+        Reset_dictionary()
+        with sqlite3.connect("Data.db") as db:
+            cursor=db.cursor()
+        find_feelings=("SELECT * FROM feelings WHERE feel=?")
+        cursor.execute(find_feelings,[(x)])
+        result=cursor.fetchall()
+        global Card_info,Card_question,Button1,Button2,Button3,questionButton,color,ans,diceButton
+        Card_info=pygame.image.load(result[0][1])
+        Card_question=pygame.image.load(result[0][2+level[x]])
+        Button1=button((255,255,255),300,430,250,40,result[0][3+level[x]])
+        Button2=button((255,255,255),300,530,250,40,result[0][4+level[x]])
+        Button3=button((255,255,255),300,630,250,40,result[0][5+level[x]])
+        questionButton=button((255,255,255),300,680,250,100,'Question')
+        diceButton=button((255,255,255),300,680,250,100,'dice')
+        color=randrange(0,255)
+        ans=result[0][6+level[x]]
+    
+    def feel_Card():#Building the cards
+        if(indexTypeCard==0):
+            screen.blit(Card_info,(200,10))
+        elif(indexTypeCard==2):
+            table=pygame.image.load("table.jpg")
+            screen.blit(table,(50,10))
+        elif indexTypeCard==3:
+            screen.fill((color,131,110))
+            sleep=pygame.image.load("sleep.png")
+            screen.blit(sleep,(0,100))
+            
+            
+        else:
+            screen.blit(Card_question,(140,10))
+    
+    
+    pygame.init()
+    pygame.display.set_caption("Moment of Emotion") 
+    screen=pygame.display.set_mode((800,800)) 
+    arr_feelings=['happy','sad','angry','fear','disappointment','surprised','tired','affection','proud','concern']
+    level={'happy':0,'sad':0,'angry':0,'fear':0,'disappointment':0,'surprised':0,'tired':0,'affection':0,'proud':0,'concern':0}
+    indexCard=-1
+    indexCard=Random()
+    indexTypeCard=2
+    running=True
+    Mistake1=True
+    Mistake2=True
+    Mistake3=True
+    t=calucate_time()
+    UpdateCard()
+    k=True
+    once_only=True
+    while running: #Loop keep the window on
+        if once_only==True:
+            t('start_time')
+            once_only=False
+        if Limit():
+            indexTypeCard=3
+            feel_Card()
+        for event in pygame.event.get():
+            pos=pygame.mouse.get_pos()
+            if event.type==pygame.MOUSEBUTTONDOWN:#Pressing on button
+                if questionButton.isOver(pos) :
+                    if(indexTypeCard==0):
+                        indexTypeCard+=1 
+                if diceButton.isOver(pos) :
+                    if(indexTypeCard==2):
+                        indexTypeCard=0 
+                        indexCard=Random()
+                elif Button1.isOver(pos) and indexTypeCard==1:
+                        if not ans==1:
+                            Mistake1=False
+                        else:
+                            Mistake1=True
+                            Mistake2=True
+                            Mistake3=True 
+                            level[x]+=5   
+                            updateTabel_exposure(id)                             
+                            indexTypeCard=2
+                            UpdateCard()
+                elif Button2.isOver(pos) and indexTypeCard==1:
+                        if not ans==2:
+                            Mistake2=False
+                        else:
+                            Mistake1=True
+                            Mistake2=True
+                            Mistake3=True 
+                            level[x]+=5      
+                            updateTabel_exposure(id)                            
+                            indexTypeCard=2
+                            UpdateCard()
+                elif Button3.isOver(pos) and indexTypeCard==1:
+                        if not ans==3:
+                            Mistake3=False
+                        else:
+                            Mistake1=True
+                            Mistake2=True
+                            Mistake3=True 
+                            level[x]+=5      
+                            updateTabel_exposure(id)                           
+                            indexTypeCard=2
+                            UpdateCard()
+                        
+            if event.type==pygame.MOUSEMOTION: 
+                
+                if questionButton.isOver(pos) and indexTypeCard==0:
+                    questionButton.color=(255,0,0)
+                else:
+                    questionButton.color=(0,255,0)
+                    
+                if diceButton.isOver(pos) and indexTypeCard==2:
+                    diceButton.color=(255,0,0)
+                else:
+                    diceButton.color=(0,255,0)
+                if Mistake1:
+                    
+                    if Button1.isOver(pos):
+                        Button1.color=(255,0,0)
+                    else:
+                        Button1.color=(0,255,0)
+                else:
+                    Button1.color=(255,0,0)
+                if Mistake2:
+                    if Button2.isOver(pos):
+                        Button2.color=(255,0,0)
+                    else:
+                        Button2.color=(0,255,0)
+                else:
+                    Button2.color=(255,0,0)
+                if Mistake3:
+                    if Button3.isOver(pos):
+                        Button3.color=(255,0,0)
+                    else:
+                        Button3.color=(0,255,0)
+                else:
+                    Button3.color=(255,0,0)
+        
+        if event.type==pygame.QUIT   :      
+            Time_Caluction(t,id)
+            running=False
+            pygame.display.quit()
+            pygame.quit()
+            break
+        RedWindow()
+        feel_Card()
+        pygame.display.flip()
+Menu()
+    
