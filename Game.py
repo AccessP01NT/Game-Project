@@ -109,9 +109,8 @@ def isGender(gender):
         return True
     return False
 
-def Check_User_Type_From_DB(res):
-    type=res[0][0]
-    id=res[0][5]
+def Check_User_Type_From_DB(id,type):
+
     if type=='M' or type=='m':
         ManagerMenu(id)
         return True
@@ -195,7 +194,9 @@ def login():
         
         if result:
             print("Welcome "+username)
-            Check_User_Type_From_DB(result)
+            type=res[0][0]
+            id=res[0][5]
+            Check_User_Type_From_DB(id,type)
             return True
         else:
             print("user and password not recognized")
