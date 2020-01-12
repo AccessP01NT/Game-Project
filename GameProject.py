@@ -420,6 +420,51 @@ def menu_parent(id_parent):
             Loop = None
             Menu()
             break
+        
+def ManagerMenu(id):
+    print()
+    x=True
+    while x:
+        print()
+        print("Welcome to Manager menu")
+        print("""1.total time of users
+2.Add/Remove users
+3.Amount of Boys\Girl that playing the game
+4.Profits from the game til now
+5.Update Code
+6.Total amount of players in the game
+7.Get total reports
+8.Logout""")
+        x=(("Enter your choice:"))
+        if x=='1':
+            total_time_of_users()
+                
+        elif x=='2':
+            Manager_Add_Remove()
+        elif x=='3':
+            print()
+            check_boys_girls()
+            print()
+        elif x=='4':
+            sum=(50.99)*count_players()
+            print()
+            print("Your Profits: {0} shekel til now".format(sum))
+            print()
+        elif x=='5':
+            exit(1)
+        elif x=='6':
+            print("\nAmount of players in the game:",count_players())
+        elif x=='7':
+            get_reports(id)
+        elif x=='8':
+            print()
+            print("GoodBye manager")
+            x=None
+            Menu()
+            
+        else:
+            print()
+            print("Invalid value,please enter again")
 
         else:
             print("\n InValid Choice Try again")
@@ -454,3 +499,6 @@ def count_players():
     c.execute("SELECT COUNT (*) FROM users WHERE UserType='P'")
     rowcount = c.fetchone()[0]
     return rowcount
+
+def Money():
+    return 50.99*count_players()
