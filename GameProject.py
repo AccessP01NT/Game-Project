@@ -207,3 +207,51 @@ def insert_into_database_user(UserType,first,last,gender,age,id,id_parent,userna
         conn.commit()
     
 
+
+
+def Delete(id):
+    conn = sqlite3.connect('Data.db')
+    c = conn.cursor()
+    with conn:
+        c.execute("DELETE  FROM users WHERE id = :id",
+                  {'id': id})
+        result=c.fetchall()
+        c.execute("DELETE  FROM Time WHERE id = :id",
+                  {'id': id})
+        result=c.fetchall()
+        c.execute("DELETE  FROM exposure_and_understanding WHERE id = :id",
+                  {'id': id})
+        result=c.fetchall()
+        if len(result)==0:
+            return False
+        else:
+            conn.commit()
+            return True
+        
+
+def time_user(id):
+    total=get_totaltime(id)
+    SecToTime(total)
+    
+def total_time_of_users():
+    sum=0
+    conn = sqlite3.connect('Data.db')    
+    cursor = conn.cursor()    
+    data = cursor.execute('''SELECT * From Time''')
+    data = data.fetchall()
+    for x in data:
+        sum+=int(x[1])
+    print("\ntotal time of all users: {0}".format(sum))
+    return
+
+def  totaltimeson(id_parent):
+     id=input("Enter you child id")
+     while not Proper_ID(id):
+         id=input("Incorrect id,enter you child id")
+     
+     if not is_parent_of_user(id_parent, id):
+         print("Vaild ID")
+         return 
+     total=get_totaltime(id)
+     SecToTime(total) 
+     return
