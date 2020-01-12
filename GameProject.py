@@ -281,6 +281,7 @@ def Manager_Add_Remove():
        else:
            print()
            print("Invalid Value, you returned to Manager menu")
+<<<<<<< HEAD
            
 def is_parent_of_user(id_parent,id):
     with sqlite3.connect("Data.db") as db:
@@ -296,6 +297,14 @@ def exposure_to_feelings(id_parent):  #111111111111111111
     id_kid=int(input("Enter your child:"))
     while not Proper_ID(id_kid):
         id_kid=int(input("Incorrect id,enter your child:"))
+=======
+
+def level_feelings(id_parent):
+    id_kid=int(input("Enter your child:"))
+    while not Proper_ID(id_kid):
+        id_kid=int(input("Incorrect id,enter your child:"))
+        
+>>>>>>> mor
     if is_parent_of_user(id_parent, id_kid):
         with sqlite3.connect("Data.db") as db:
                 cursor=db.cursor()
@@ -312,6 +321,7 @@ surprised: {5}
 tired: {6}
 affection: {7}
 proud: {8}
+<<<<<<< HEAD
 concern: {9}""".format(x[2],x[4],x[6],x[8],x[10],x[12],x[14],x[16],x[18],x[20]))
     else:
         print("Vaild ID")
@@ -353,3 +363,10 @@ def review(id_parent):
     y='{2}\{3}\{4} time:{0:0d}:{1:0d}'.format(now.hour,now.minute,now.day,now.month,now.year)
     cursor.execute('''UPDATE reports SET date = ? WHERE id = ?''', (y,id_parent))
     conn.commit()
+=======
+concern: {9}""".format(x[1],x[3],x[5],x[7],x[9],x[11],x[13],x[15],x[17],x[19]))
+    else:
+        print("Vaild ID")
+    return 
+
+>>>>>>> mor
