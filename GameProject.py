@@ -365,4 +365,31 @@ def review(id_parent):
     conn.commit()
 
 
+def level_feelings(id_parent):
+    id_kid=int(input("Enter your child:"))
+    while not Proper_ID(id_kid):
+        id_kid=int(input("Incorrect id,enter your child:"))
+        
+    if is_parent_of_user(id_parent, id_kid):
+        with sqlite3.connect("Data.db") as db:
+                cursor=db.cursor()
+        find_parent=("SELECT * FROM exposure_and_understanding WHERE id=?")
+        cursor.execute(find_parent,[(id_kid)])
+        result=cursor.fetchall()
+        x=result[0]
+        print("""Happy: {0}
+sad: {1}
+angry: {2}
+fear: {3}
+disappointment: {4}
+surprised: {5}
+tired: {6}
+affection: {7}
+proud: {8}
+concern: {9}""".format(x[1],x[3],x[5],x[7],x[9],x[11],x[13],x[15],x[17],x[19]))
+    else:
+        print("Vaild ID")
+    return 
+
+
 
