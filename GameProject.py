@@ -583,4 +583,59 @@ def play(id):
         total_time=str(int(result[0][1])+update_time)
         cursor.execute('''UPDATE Time SET total_time = ? WHERE id = ?''', (total_time, id))
         conn.commit()
-        
+
+    def Insert():  # Insert details to DB feelings table
+        def insert_into_database_feelings(feel, info, question1, Answer1_of_question1, Answer2_of_question1,
+                                          Answer3_of_question1, CurrectAnswer_of_question1, question2,
+                                          Answer1_of_question2, Answer2_of_question2, Answer3_of_question2,
+                                          CurrectAnswer_of_question2, question3, Answer1_of_question3,
+                                          Answer2_of_question3, Answer3_of_question3, CurrectAnswer_of_question3):
+            conn = sqlite3.connect('Data.db')
+            c = conn.cursor()
+            with conn:
+                c.execute(
+                    "INSERT INTO feelings VALUES (:feel,:info, :question1,:Answer1_of_question1,:Answer2_of_question1,:Answer3_of_question1,:CurrectAnswer_of_question1,:question2,:Answer1_of_question2,:Answer2_of_question2,:Answer3_of_question2,:CurrectAnswer_of_question2,:question3,:Answer1_of_question3,:Answer2_of_question3,:Answer3_of_question3,:CurrectAnswer_of_question3)",
+                    {'feel': feel, 'info': info, 'question1': question1, 'Answer1_of_question1': Answer1_of_question1,
+                     'Answer2_of_question1': Answer2_of_question1, 'Answer3_of_question1': Answer3_of_question1,
+                     'CurrectAnswer_of_question1': CurrectAnswer_of_question1, 'question2': question2,
+                     'Answer1_of_question2': Answer1_of_question2, 'Answer2_of_question2': Answer2_of_question2,
+                     'Answer3_of_question2': Answer3_of_question2,
+                     'CurrectAnswer_of_question2': CurrectAnswer_of_question2, 'question3': question3,
+                     'Answer1_of_question3': Answer1_of_question3, 'Answer2_of_question3': Answer2_of_question3,
+                     'Answer3_of_question3': Answer3_of_question3,
+                     'CurrectAnswer_of_question3': CurrectAnswer_of_question3})
+                conn.commit()
+
+        insert_into_database_feelings('happy', 'Hapiness_Complete.png', 'Happy1_Complete.PNG', 'Angry', 'Smile', 'Cry',
+                                      2, 'Happy2_Complete.PNG', 'Happy', 'Sad', 'Anger', 1, 'Happy3_Complete.PNG',
+                                      'Anger', 'Sad', 'Happy', 2)
+        insert_into_database_feelings('sad', 'Sadness_Complete.png', 'Sad1_Complete.PNG', 'Sad', 'fear', 'Anger', 1,
+                                      'Sad2_Complete.png', 'Happy', 'Sad', 'Anger', 2, 'Sad3_Complete.png', 'Anger',
+                                      'Sad', 'fear', 2)
+        insert_into_database_feelings('angry', 'Angry_Complete.png', 'Anger1_Complete.PNG', 'Happy', 'Sad', 'Angry', 3,
+                                      'Anger2_Complete.png', 'Anger', 'Happy', 'Fear', 1, 'Anger3_Complete.PNG', 'Fear',
+                                      'Sad', 'Anger', 3)
+        insert_into_database_feelings('fear', 'Fear_Complete.png', 'Fear1_Complete.PNG', 'Happy', 'Sad', 'Fear', 3,
+                                      'Fear2_Complete.PNG', 'Sad', 'Fear', 'Anger', 2, 'Fear3_Complete.PNG', 'Fear',
+                                      'Sad', 'Happy', 1)
+        insert_into_database_feelings('disappointment', 'Disappointment_Complete.png', 'Disappointment1_Complete.png',
+                                      'Disappoint', 'Smile', 'tired', 1, 'Disappointment2_Complete.PNG', 'Happy',
+                                      'Disappoint', 'Anger', 2, 'Disappointment3_Complete.PNG', 'Anger', 'Disappoint',
+                                      'Happy', 2)
+        insert_into_database_feelings('surprised', 'Surprised_Complete.png', 'Surprised1_Complete.PNG', 'Surprised',
+                                      'fear', 'Anger', 1, 'Surprised2_Complete.png', 'Happy', 'Sad', 'Surprised', 2,
+                                      'Surprised3_Complete.png', 'Anger', 'Surprised', 'Fear', 2)
+        insert_into_database_feelings('tired', 'Tired_Complete.png', 'Tired1_Complete.PNG', 'Tired', 'Sad', 'Angry', 1,
+                                      'Tired2_Complete.png', 'Anger', 'Tired', 'Fear', 2, 'Tired3_Complete.PNG', 'Fear',
+                                      'Sad', 'Tired', 3)
+        insert_into_database_feelings('affection', 'Affection_Complete.png', 'Affection1_Complete.PNG', 'Affection',
+                                      'Sad', 'Fear', 1, 'Affection2_Complete.PNG', 'Sad', 'Affection', 'Anger', 2,
+                                      'Affection3_Complete.PNG', 'Fear', 'Sad', 'Affection', 3)
+        insert_into_database_feelings('proud', 'Proud_Complete.png', 'Proud1_Complete.PNG', 'Happy', 'Proud', 'Angry',
+                                      2, 'Proud2_Complete.png', 'Proud', 'Happy', 'Fear', 1, 'Proud3_Complete.PNG',
+                                      'Fear', 'Sad', 'Proud', 3)
+        insert_into_database_feelings('concern', 'Concern_Complete.png', 'Concern1_Complete.PNG', 'Happy', 'Sad',
+                                      'Concern', 3, 'Concern2_Complete.PNG', 'Sad', 'Concern', 'Anger', 2,
+                                      'Concern3_Complete.PNG', 'Concern', 'Sad', 'Happy', 1)
+
+    Insert()
