@@ -548,3 +548,39 @@ def ManagerMenu(id):
         else:
             print()
             print("Invalid value,please enter again")
+            
+def play(id):
+    def calucate_time():
+        startSec=0
+        endSec=0
+        start=datetime.datetime.now()
+        def time(message):
+            if message=='start_time':
+                nonlocal startSec,start
+                start=datetime.datetime.now()
+                startSec=start.hour*3600+start.minute*60+start.second
+            elif message=='end_time':
+                nonlocal endSec
+                end=datetime.datetime.now()
+                endSec=end.hour*3600+end.minute*60+end.second
+                if not(end.day - start.day == 0):
+                    return 1
+                return 0
+            elif message=='Caluction':
+                return endSec-startSec
+        return time
+    
+    
+    def Time_Caluction(t,id):
+        flag=t('end_time')
+        update_time=t('Caluction')
+        conn = sqlite3.connect('Data.db')
+        with conn as db:
+            cursor=db.cursor()
+        find=("SELECT * FROM Time WHERE id=?")
+        cursor.execute(find,[id])
+        result=cursor.fetchall()
+        total_time=str(int(result[0][1])+update_time)
+        cursor.execute('''UPDATE Time SET total_time = ? WHERE id = ?''', (total_time, id))
+        conn.commit()
+        
