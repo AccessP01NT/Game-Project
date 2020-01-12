@@ -979,5 +979,32 @@ def updateTabel_exposure(id):
         RedWindow()
         feel_Card()
         pygame.display.flip()
+
+
+def Menu_User(id):
+    print()
+    Loop=True
+    while Loop:
+        print()
+        print("""
+        1.Play
+        2.Total play time
+        3.Logout
+        """)
+        ans=(input("Enter your choice:"))
+        if ans=='1':
+          play(id)
+        elif ans=='2':
+           time_user(id)
+        elif ans=='3':
+          print()
+          print("\n Goodbye")
+          Loop = None
+          Menu()
+          break
+        else:
+           print()
+           print("\n InValid Choice Try again")
+
 Menu()
     
