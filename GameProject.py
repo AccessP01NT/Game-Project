@@ -363,8 +363,6 @@ def review(id_parent):
     y='{2}\{3}\{4} time:{0:0d}:{1:0d}'.format(now.hour,now.minute,now.day,now.month,now.year)
     cursor.execute('''UPDATE reports SET date = ? WHERE id = ?''', (y,id_parent))
     conn.commit()
-    else:
-        print("Vaild ID")
-    return 
+
 
 
