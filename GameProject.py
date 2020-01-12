@@ -292,3 +292,29 @@ def is_parent_of_user(id_parent,id):
         return True
     return False
 
+def exposure_to_feelings(id_parent):  #111111111111111111
+    id_kid=int(input("Enter your child:"))
+    while not Proper_ID(id_kid):
+        id_kid=int(input("Incorrect id,enter your child:"))
+    if is_parent_of_user(id_parent, id_kid):
+        with sqlite3.connect("Data.db") as db:
+                cursor=db.cursor()
+        find_parent=("SELECT * FROM exposure_and_understanding WHERE id=?")
+        cursor.execute(find_parent,[(id_kid)])
+        result=cursor.fetchall()
+        x=result[0]
+        print("""Happy: {0}
+sad: {1}
+angry: {2}
+fear: {3}
+disappointment: {4}
+surprised: {5}
+tired: {6}
+affection: {7}
+proud: {8}
+concern: {9}""".format(x[2],x[4],x[6],x[8],x[10],x[12],x[14],x[16],x[18],x[20]))
+    else:
+        print("Vaild ID")
+    return
+      
+
