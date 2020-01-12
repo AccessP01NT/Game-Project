@@ -225,3 +225,30 @@ def Delete(id):
         else:
             conn.commit()
             return True
+        
+def time_user(id):
+    total=get_totaltime(id)
+    SecToTime(total)
+    
+def total_time_of_users():
+    sum=0
+    conn = sqlite3.connect('Data.db')    
+    cursor = conn.cursor()    
+    data = cursor.execute('''SELECT * From Time''')
+    data = data.fetchall()
+    for x in data:
+        sum+=int(x[1])
+    print("\ntotal time of all users: {0}".format(sum))
+    return
+
+def  totaltimeson(id_parent):
+     id=input("Enter you child id")
+     while not Proper_ID(id):
+         id=input("Incorrect id,enter you child id")
+     
+     if not is_parent_of_user(id_parent, id):
+         print("Vaild ID")
+         return 
+     total=get_totaltime(id)
+     SecToTime(total) 
+     return
