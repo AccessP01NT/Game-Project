@@ -207,3 +207,21 @@ def insert_into_database_user(UserType,first,last,gender,age,id,id_parent,userna
         conn.commit()
     
 
+def Delete(id):
+    conn = sqlite3.connect('Data.db')
+    c = conn.cursor()
+    with conn:
+        c.execute("DELETE  FROM users WHERE id = :id",
+                  {'id': id})
+        result=c.fetchall()
+        c.execute("DELETE  FROM Time WHERE id = :id",
+                  {'id': id})
+        result=c.fetchall()
+        c.execute("DELETE  FROM exposure_and_understanding WHERE id = :id",
+                  {'id': id})
+        result=c.fetchall()
+        if len(result)==0:
+            return False
+        else:
+            conn.commit()
+            return True
