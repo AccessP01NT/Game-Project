@@ -424,4 +424,14 @@ def menu_parent(id_parent):
         else:
             print("\n InValid Choice Try again")
             
+    
+def check_boys_girls():
+    conn = sqlite3.connect('Data.db')
+    c = conn.cursor()
+    c.execute("SELECT COUNT (*) FROM users WHERE gender='B' and UserType='U'")
+    BoysCount = c.fetchone()[0]    
+    c.execute("SELECT COUNT (*) FROM users WHERE gender='G' and UserType='U'")
+    GirlsCount = c.fetchone()[0] 
+    print("Count of girls in the game:{1} , Count of boys in the game:{0}".format(BoysCount,GirlsCount))
+            
 
