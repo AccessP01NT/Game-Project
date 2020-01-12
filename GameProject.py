@@ -101,3 +101,194 @@ def Menu():
             conn.close()
         else:
             print("\n Not Valid Choice Try again")
+
+def isUserType(UserType):
+    if UserType.upper()=='P' or UserType.upper()=='U' or UserType.upper()=='M':
+        return True
+    return False
+
+def isGender(gender):
+    if gender=='B' or gender=='G' or gender=='b' or gender=='g':
+        return True
+    return False
+
+def Proper_ID(id):
+    if len(id)==9:
+        return True
+    return False
+
+def Proper_First_Or_Last_Name(str):
+    if str.isalpha():
+        return True
+    return False
+
+def Proper_Age(age):
+    if age>0 and age<120:
+        return True
+    return False
+
+def Check_User_Type_From_DB(type,id):
+    if type=='M' or type=='m':
+        ManagerMenu(id)
+        return True
+    elif type=='P' or type=='p':
+       menu_parent(id)
+       return True
+    elif type=='U' or type=='u':
+        Menu_User(id)
+        return True
+    else:
+        return False
+
+
+def Registerion():
+        UserType=input("Enter user type for registration, Please Enter:U-User,P-Parent:  ")
+        while isUserType(UserType)!=True:
+                UserType=input("Invalid input, Enter user type for registration, Please Enter: U-User,P-Parent:  ")
+        first=input("Enter first name: ")
+        while Proper_First_Or_Last_Name(first)!=True:
+            first=input("Invalid input,Enter first name only letters: ")
+        last=input("Enter last name: ")
+        while Proper_First_Or_Last_Name(last)!=True:
+            last=input("Invalid input,Enter last name only letters: ")
+        gender=input("Enter your gender [Boy or Girl]: ")
+        while isGender(gender)!=True:
+                gender=input("Invalid input, Enter your gender [Boy or Girl]: ")
+        age=int(input("Enter your age: "))
+        while Proper_Age(age)!=True:
+                age=int(input("Invalid Enter your age: "))
+        id=input("Enter your personal ID: ")
+        while Proper_ID(id)!=True:
+             id=input("Enter your personal ID properly [9 digits]: ")
+        if UserType.upper()=='U':
+            id_parent=input("Enter parent ID: ")
+            while Proper_ID(id_parent)!=True:
+                 id=input("Enter your parent properly [9 digits]: ")
+        else:
+            id_parent='none'
+        username=input("Enter username: ")
+        password=input("Enter password: ")
+        insert_into_database_user(UserType.upper(),first,last,gender.upper(),age,id,id_parent,username,password)      
+        
+def login():
+    while True:
+        username=input("Enter UserName: ")
+        password=input("Enter Password: ")
+        with sqlite3.connect("Data.db") as db:
+            cursor=db.cursor()
+        find_user=("SELECT * FROM users WHERE username=? AND password=?")
+        cursor.execute(find_user,[(username),(password)])
+        result=cursor.fetchall()
+        
+        if result:
+            print("Welcome "+username)
+            type=result[0][0]
+            id=result[0][5]
+            Check_User_Type_From_DB(type,id)
+            return True
+        else:
+            print("user and password not recognized")
+            enter_again=input("do you want enter again you login details [y/n]: ")
+            if enter_again.lower()== 'n':
+                print("GoodBye")
+                return False  
+            
+def insert_into_database_user(UserType,first,last,gender,age,id,id_parent,username,password):
+    conn = sqlite3.connect('Data.db')
+    c = conn.cursor()
+    with conn:
+        c.execute("INSERT INTO users VALUES (:UserType,:first, :last,:age,:gender,:id,:id_parent,:username,:password,:time_limit)", {'UserType':UserType,'first':first, 'last':last,'age':age,'gender':gender,'id':id,'id_parent':id_parent,'username':username,'password':password,'time_limit':'23:59'})
+        if UserType.upper()=='U':
+            c.execute("INSERT INTO Time VALUES (:id,:total_time)", {'id':id,'total_time':'0'})
+            c.execute("INSERT INTO exposure_and_understanding VALUES (:id,:level_happy,:exposure_happy,:level_sad,:exposure_sad,:level_angry,:exposure_angry,:level_fear,:exposure_fear,:level_disappointment,:exposure_disappointment,:level_suprised,:exposure_suprised,:level_tired,:exposure_tired,:level_affection,:exposure_affection,:level_proud ,:exposure_proud,:level_concern,:exposure_concern)", {'id':id,'level_happy':'0','exposure_happy':0,'level_sad':'0','exposure_sad':0,'level_angry':'0','exposure_angry':0,'level_fear':'0','exposure_fear':0,'level_disappointment':'0','exposure_disappointment':0,'level_suprised':'0','exposure_suprised':0,'level_tired':'0','exposure_tired':0,'level_affection':'0','exposure_affection':0 ,'level_proud':'0' ,'exposure_proud':0,'level_concern':'0','exposure_concern':0})
+
+        else:
+            c.execute("INSERT INTO reports VALUES (:id,:review,:first,:last,:date)", {'id':id,'review':'None','first':first,'last':last,'date':'00:00:0000'})
+        conn.commit()
+    
+
+def Delete(id):
+    conn = sqlite3.connect('Data.db')
+    c = conn.cursor()
+    with conn:
+        c.execute("DELETE  FROM users WHERE id = :id",
+                  {'id': id})
+        result=c.fetchall()
+        c.execute("DELETE  FROM Time WHERE id = :id",
+                  {'id': id})
+        result=c.fetchall()
+        c.execute("DELETE  FROM exposure_and_understanding WHERE id = :id",
+                  {'id': id})
+        result=c.fetchall()
+        if len(result)==0:
+            return False
+        else:
+            conn.commit()
+            return True
+        
+def time_user(id):
+    total=get_totaltime(id)
+    SecToTime(total)
+    
+def total_time_of_users():
+    sum=0
+    conn = sqlite3.connect('Data.db')    
+    cursor = conn.cursor()    
+    data = cursor.execute('''SELECT * From Time''')
+    data = data.fetchall()
+    for x in data:
+        sum+=int(x[1])
+    print("\ntotal time of all users: {0}".format(sum))
+    return
+
+def  totaltimeson(id_parent):
+     id=input("Enter you child id")
+     while not Proper_ID(id):
+         id=input("Incorrect id,enter you child id")
+     
+     if not is_parent_of_user(id_parent, id):
+         print("Vaild ID")
+         return 
+     total=get_totaltime(id)
+     SecToTime(total) 
+     return
+ 
+def Manager_Add_Remove():
+   print()
+   x=True
+   while x:
+       print("""1.Add player
+2.Remove player
+3.return to menu""")
+       x=int(input("Enter your choice:"))
+       if x==1:
+           print()
+           Registerion()
+           break
+           
+       elif x==2:
+           print()
+           id=input("Enter ID of the player that you want to remove: ")
+           Delete(id)
+           break
+           
+      
+       elif x==3:
+           print()
+           #ManagerMenu()
+           break
+           
+       else:
+           print()
+           print("Invalid Value, you returned to Manager menu")
+           
+def is_parent_of_user(id_parent,id):
+    with sqlite3.connect("Data.db") as db:
+            cursor=db.cursor()
+    find_parent=("SELECT * FROM users WHERE id=? AND id_parent=?")
+    cursor.execute(find_parent,[(id),(id_parent)])
+    result=cursor.fetchall()
+    if result:
+        return True
+    return False
+
