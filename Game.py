@@ -415,7 +415,10 @@ def is_proper_time(time):
     return False
 
 def  Limit_Your_Kid(id_parent):
-    id_kid=int(input("Enter the child that you want limit:"))
+    id_kid=(input("Enter the child that you want limit:"))
+    while not Proper_ID(id_kid):
+        id_kid=(input("Enter the child that you want limit again:"))
+    
     if is_parent_of_user(id_parent, id_kid):
         set_time=input("Enter time limitation for you child:")
         while not is_proper_time(set_time):
@@ -449,7 +452,9 @@ def  totaltimeson(id_parent):
      SecToTime(total) 
      return
 def level_feelings(id_parent):#@222222222222222222222222
-    id_kid=int(input("Enter the child that you want limit:"))
+    id_kid=(input("Enter your child:"))
+    while not Proper_ID(id_kid):
+        id_kid=(input("Incorrect id,enter your child:"))
     if is_parent_of_user(id_parent, id_kid):
         with sqlite3.connect("Data.db") as db:
                 cursor=db.cursor()
@@ -471,7 +476,9 @@ concern: {9}""".format(x[1],x[3],x[5],x[7],x[9],x[11],x[13],x[15],x[17],x[19]))
         print("Vaild ID")
     return 
 def exposure_to_feelings(id_parent):  #111111111111111111
-    id_kid=int(input("Enter the child that you want limit:"))
+    id_kid=(input("Enter your child:"))
+    while not Proper_ID(id_kid):
+        id_kid=(input("Incorrect id,enter your child:"))
     if is_parent_of_user(id_parent, id_kid):
         with sqlite3.connect("Data.db") as db:
                 cursor=db.cursor()
@@ -740,16 +747,14 @@ def play(id):
         cursor.execute(find_feelings,[(x)])
         result=cursor.fetchall()
         global Card_info,Card_question,Button1,Button2,Button3,questionButton,color,ans,diceButton
-        #if Limit():
-           # Card_info=pygame.image.load('Disappointment1_Complete.png')
-       # else:
+       
         Card_info=pygame.image.load(result[0][1])
         Card_question=pygame.image.load(result[0][2+level[x]])
         Button1=button((255,255,255),300,430,250,40,result[0][3+level[x]])
         Button2=button((255,255,255),300,530,250,40,result[0][4+level[x]])
         Button3=button((255,255,255),300,630,250,40,result[0][5+level[x]])
         questionButton=button((255,255,255),300,680,250,100,'Question')
-        diceButton=button((255,255,255),50,680,250,100,'dice')
+        diceButton=button((255,255,255),300,680,250,100,'dice')
         color=randrange(0,255)
         ans=result[0][6+level[x]]
     
@@ -782,11 +787,11 @@ def play(id):
             screen.blit(Card_info,(200,10))
         elif(indexTypeCard==2):
             table=pygame.image.load("table.jpg")
-            screen.blit(table,(200,10))
+            screen.blit(table,(50,10))
         elif indexTypeCard==3:
             screen.fill((color,139,110))
-            sleep=pygame.image.load("sleep.jpg")
-            screen.blit(sleep,(200,10))
+            sleep=pygame.image.load("sleep.png")
+            screen.blit(sleep,(0,100))
             
             
         else:
@@ -836,7 +841,7 @@ def play(id):
                 if questionButton.isOver(pos) :
                     if(indexTypeCard==0):
                         indexTypeCard+=1 
-                elif diceButton.isOver(pos) :
+                if diceButton.isOver(pos) :
                     if(indexTypeCard==2):
                         indexTypeCard=0 
                         indexCard=Random()
@@ -849,7 +854,6 @@ def play(id):
                             Mistake3=True 
                             level[x]+=5   
                             updateTabel_exposure(id)   
-                            #indexCard=Random()
                             indexTypeCard=2
                             UpdateCard()
                 elif Button2.isOver(pos) and indexTypeCard==1:
@@ -861,7 +865,6 @@ def play(id):
                             Mistake3=True 
                             level[x]+=5      
                             updateTabel_exposure(id)
-                            #indexCard=Random()
                             indexTypeCard=2
                             UpdateCard()
                 elif Button3.isOver(pos) and indexTypeCard==1:
@@ -873,7 +876,6 @@ def play(id):
                             Mistake3=True 
                             level[x]+=5      
                             updateTabel_exposure(id)
-                            #indexCard=Random()
                             indexTypeCard=2
                             UpdateCard()
                         
