@@ -252,3 +252,32 @@ def  totaltimeson(id_parent):
      total=get_totaltime(id)
      SecToTime(total) 
      return
+ 
+def Manager_Add_Remove():
+   print()
+   x=True
+   while x:
+       print("""1.Add player
+2.Remove player
+3.return to menu""")
+       x=int(input("Enter your choice:"))
+       if x==1:
+           print()
+           Registerion()
+           break
+           
+       elif x==2:
+           print()
+           id=input("Enter ID of the player that you want to remove: ")
+           Delete(id)
+           break
+           
+      
+       elif x==3:
+           print()
+           #ManagerMenu()
+           break
+           
+       else:
+           print()
+           print("Invalid Value, you returned to Manager menu")
