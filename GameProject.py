@@ -281,3 +281,14 @@ def Manager_Add_Remove():
        else:
            print()
            print("Invalid Value, you returned to Manager menu")
+           
+def is_parent_of_user(id_parent,id):
+    with sqlite3.connect("Data.db") as db:
+            cursor=db.cursor()
+    find_parent=("SELECT * FROM users WHERE id=? AND id_parent=?")
+    cursor.execute(find_parent,[(id),(id_parent)])
+    result=cursor.fetchall()
+    if result:
+        return True
+    return False
+
