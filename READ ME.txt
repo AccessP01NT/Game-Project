@@ -1,0 +1,49 @@
+*************************************************
+******************PRESENTATION*******************
+*************************************************
+
+- Welcome to "Moment of Emotion", a project developed by "Team 4", 2nd year software engineering students at SCE.
+- The project is a game developed to assist kids who located cosiderably high on the autism spectrum to better understand social situations
+  and how to react to those situations.
+- The project was developed in a way that will allow the children's parents to monitor their kids progress and activity in the game. By
+  that, allowing the parents always know how much their child have progressed during the game.
+
+*************************************************
+***BEFORE USAGE, CERFULLY READ SPECIFICATIONS!***
+*************************************************
+
+- The program is written in python 3.7.0 and need python 3.7.0 interpretor.
+- The database used in this program is based on SQLite so it can be integreted with the python's "sqlite3" library.
+- The program been checked and tested on Microsoft's Windows 10 OS platform so it can be operated on this platform.
+- WARNNING: If you using another platform (OS) on which the program hasn't been tested be aware issues and conflicit might appear.
+- Make sure you have Python IDLE 3.7.0 installed on your machine. If you do not have Python IDLE 3.7.0 on your computer you can get the
+  program freely from here: https://www.python.org/downloads/release/python-370/
+- The program is using "pygame" 1.9.2 library therefore it first needed to be installed on your machine in your Python directory. If you don't
+  have "pygame" 1.9.2 library installed, you can download it from here: https://www.pygame.org/download.shtml
+- The program set to be running localy, there for no internet network is necessary during the running of the program itself.
+
+BEFORE RUNNING THE PROGRAM:
+1) Installing the program and all its necessary files from the git repository: https://github.com/AccessP01NT/Game-Project
+2) Make sure the pictures from the "pictures" directory are extracted at the same directory your program is located.
+3) Make sure the database that comes along with the program is located in the same directory as the program itself.
+4) Along with main program there are 2 files that needed to be installed in the same directory:
+	"unit_test.py" - unit test file for the program.
+	"button.py" - file containing button object specifications.
+
+RUNNING THE PROGRAM:
+- In order to run the program just double click the program it will automaticly run via your IDLE.
+- Part of the program is running on Python IDLE 3.7.0 prompt.
+- The program set to have different type of users. Every user type have its own permission, make sure you running the program from the
+  correct user.
+- NOTE: You cannot create administrator user type and there is no need for it, defaultive system administrator has alreeady been set in the
+  database: 
+	Username: admin
+	Password: admin
+- NOTE: Although the developers covered many issues of the program, unexpected issues might appear anyway.
+- NOTE: If by any mistake any of the the files or the original database was deleted you can redownload it form the git repository.
+ 
+Except the mentioned aboved there are no forthers specifications or factors to consider in.
+
+
+(C) All rights for this project reserved to "Team 4" and it's members as specified in the project documentation. Any distrebution of the
+program or its parts without "Team 4" permission is agaist the law.
