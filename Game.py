@@ -194,8 +194,8 @@ def login():
         
         if result:
             print("Welcome "+username)
-            type=res[0][0]
-            id=res[0][5]
+            type=result[0][0]
+            id=result[0][5]
             Check_User_Type_From_DB(id,type)
             return True
         else:
@@ -586,7 +586,7 @@ def play(id):
             insert_into_database_feelings('affection','Affection_Complete.png','Affection1_Complete.PNG','Affection','Sad','Fear',1,'Affection2_Complete.PNG','Sad','Affection','Anger',2,'Affection3_Complete.PNG','Fear','Sad','Affection',3)
             insert_into_database_feelings('proud','Proud_Complete.png','Proud1_Complete.PNG','Happy','Proud','Angry',2,'Proud2_Complete.png','Proud','Happy','Fear',1,'Proud3_Complete.PNG','Fear','Sad','Proud',3) 
             insert_into_database_feelings('concern','Concern_Complete.png','Concern1_Complete.PNG','Happy','Sad','Concern',3,'Concern2_Complete.PNG','Sad','Concern','Anger',2,'Concern3_Complete.PNG','Concern','Sad','Happy',1)       
-    
+    #Insert()#Used only once when creating initialized DB
     def updateTabel_exposure(id):
         conn = sqlite3.connect('Data.db')
         with conn as db:
