@@ -1,4 +1,4 @@
-*************************************************
+﻿*************************************************
 ******************PRESENTATION*******************
 *************************************************
 
@@ -7,6 +7,16 @@
   and how to react to those situations.
 - The project was developed in a way that will allow the children's parents to monitor their kids progress and activity in the game. By
   that, allowing the parents always know how much their child have progressed during the game.
+
+*************************************************
+***********CHANGES IN THE REQUIREMENTS***********
+*************************************************
+
+Requirement 3.8 (בתור מנהל אני רוצה אפשרות לעדכן את הקוד) was deleted due to inability to execute the requirment as specified by the practicer during
+team meeting at 13th January 2020.
+Requirement 1.6 (בתור משתמש אני רוצה לדעת כמה זמן שיחקתי השבוע) was changed to "בתור משתמש אני רוצה לדעת כמה זמן שיחקתי באופן גורף". Checklist requirements were
+updated in accordance.
+DFD and ERD charts have been fixed by request of the practicer during team meeting at 13th January 2020.
 
 *************************************************
 ***BEFORE USAGE, CERFULLY READ SPECIFICATIONS!***
