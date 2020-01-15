@@ -355,10 +355,9 @@ def ManagerMenu(id):
 2.Add/Remove users
 3.Amount of Boys\Girl that playing the game
 4.Profits from the game til now
-5.Update Code
-6.Total amount of players in the game
-7.Get total reports
-8.Logout""")
+5.Total amount of players in the game
+6.Get total reports
+7.Logout""")
         x=(input("Enter your choice:"))
         if x=='1':
             total_time_of_users()
@@ -374,14 +373,10 @@ def ManagerMenu(id):
             print("Your Profits: {0} shekel til now".format(money()))
             print()
         elif x=='5':
-            print()
-            exit(1)
-            print()
-        elif x=='6':
             print("\nAmount of players in the game:",count_players())
-        elif x=='7':
+        elif x=='6':
             get_reports(id)
-        elif x=='8':
+        elif x=='7':
             print()
             print("GoodBye manager")
             x=None
